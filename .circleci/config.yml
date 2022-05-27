@@ -11,7 +11,7 @@ jobs:
           command: hadolint Dockerfile
   build:
     docker:
-      - image: 20.10.16-git
+      - image: docker:20.10.16-git
     steps:
       - checkout
       - setup_remote_docker
