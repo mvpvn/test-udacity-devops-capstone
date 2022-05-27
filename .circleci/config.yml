@@ -1,0 +1,27 @@
+version: 2.1
+
+jobs:
+  lint:
+    docker:
+      - image: hadolint/hadolint:latest-debian
+    steps:
+      - checkout
+      - run:
+          name: Lint Dockerfile
+          command: hadolint Dockerfile
+  build:
+    docker:
+      - image: 20.10.16-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build --build-arg BUILD_ID=${CIRCLE_WORKFLOW_ID:0:7} -t site .
+
+workflows:
+  default:
+    jobs:
+      - lint
+      - build
