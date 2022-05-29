@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Lint Dockerfile
           command: hadolint Dockerfile
+
   build:
     docker:
       - image: docker:20.10.16-git
@@ -24,6 +25,7 @@ jobs:
           root: .
           paths:
             - site.tar
+
   publish:
     docker:
       - image: docker:20.10.16-git
@@ -38,11 +40,28 @@ jobs:
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_LOGIN --password-stdin
             docker load -i site.tar
             docker tag site "$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
+            docker tag site "$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:latest"
             docker push "$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
-      - persist_to_workspace:
-          root: .
-          paths:
-            - site.tar
+            docker push "$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:latest"
+
+  deploy:
+    docker:
+      - image: aws/aws-cli
+    steps:
+      - run:
+          name: Install dependencies
+          command: |
+            curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+            mv kubectl /usr/local/bin
+      - run:
+          name: Deploy new version
+          command: |
+            aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
+            if kubectl get deployment site; then
+              kubectl set image deployment/site-deployment site=$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
+            else
+              kubectl apply -f ./kubernetes
+            end
 
 workflows:
   default:
