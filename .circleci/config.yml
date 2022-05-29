@@ -46,7 +46,7 @@ jobs:
 
   deploy:
     docker:
-      - image: aws/aws-cli
+      - image: amazon/aws-cli
     steps:
       - run:
           name: Install dependencies
