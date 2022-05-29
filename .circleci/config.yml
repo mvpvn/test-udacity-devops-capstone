@@ -52,11 +52,11 @@ jobs:
           name: Install dependencies
           command: |
             curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
-            mv kubectl /usr/local/bin
+            mv kubectl /usr/local/bin/kubectl
       - run:
           name: Deploy new version
           command: |
-            aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
+            aws eks update-kubeconfig --name capstone
             if kubectl get deployment site; then
               kubectl set image deployment/site-deployment site=$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
             else
