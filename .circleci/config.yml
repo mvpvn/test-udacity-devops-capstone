@@ -52,12 +52,13 @@ jobs:
           name: Install dependencies
           command: |
             curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
-            # mv kubectl /usr/local/bin/kubectl
             install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
       - run:
           name: Deploy new version
           command: |
             aws eks update-kubeconfig --name capstone
+            cat ~/.kube/config
+            echo $(aws sts get-caller-identity)
             echo "Deploying to cluster"
             RESULT=$(kubectl get deployment site)
             echo $RESULT
