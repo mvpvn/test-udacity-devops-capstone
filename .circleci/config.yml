@@ -52,7 +52,7 @@ jobs:
           name: Install dependencies
           command: |
             curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
-#            mv kubectl /usr/local/bin/kubectl
+            # mv kubectl /usr/local/bin/kubectl
             sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
       - run:
           name: Deploy new version
@@ -63,7 +63,8 @@ jobs:
             echo $RESULT
             if $(kubectl get deployment site); then
               echo "Updating deployment to ${CIRCLE_WORKFLOW_ID:0:7}"
-              kubectl set image deployment/site-deployment site=$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
+#              kubectl set image deployment/site-deployment site=$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
+              kubectl set image deployment/site-deployment site=$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:latest"
             else
               echo "Creating deployment"
               kubectl apply -f ./kubernetes
@@ -72,13 +73,13 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint
-      - build:
-          requires:
-            - lint
-      - publish:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - publish
+#      - lint
+#      - build:
+#          requires:
+#            - lint
+#      - publish:
+#          requires:
+#            - build
+      - deploy
+#          requires:
+#            - publish
