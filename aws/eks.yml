@@ -21,6 +21,23 @@ Resources:
             Action:
               - "sts:AssumeRole"
       Path: "/"
+  AmazonEKSNodeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        - "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
   ClusterSecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -60,20 +77,20 @@ Resources:
           - Fn::ImportValue: !Sub "${EnvironmentName}-PRI1-SN"
           - Fn::ImportValue: !Sub "${EnvironmentName}-PRI2-SN"
       RoleArn: !GetAtt EKSRole.Arn
-#  EKSNodegroup:
-#    Type: 'AWS::EKS::Nodegroup'
-#    Properties:
-#      ClusterName: capstone
-#      NodeRole: 'arn:aws:iam::012345678910:role/eksInstanceRole'
-#      InstanceTypes:
-#        - !Ref InstanceType
-#      ScalingConfig:
-#        MinSize: 1
-#        DesiredSize: 1
-#        MaxSize: 1
-#      Subnets:
-#        - Fn::ImportValue: !Sub "${EnvironmentName}-PRI1-SN"
-#        - Fn::ImportValue: !Sub "${EnvironmentName}-PRI2-SN"
+  EKSNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: capstone
+      NodeRole: !GetAtt AmazonEKSNodeRole.Arn
+      InstanceTypes:
+        - !Ref InstanceType
+      ScalingConfig:
+        MinSize: 1
+        DesiredSize: 1
+        MaxSize: 1
+      Subnets:
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PRI1-SN"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PRI2-SN"
 #  LBSecGroup:
 #    Type: AWS::EC2::SecurityGroup
 #    Properties:
