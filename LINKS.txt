@@ -1,0 +1,3 @@
+GITHUB = https://github.com/rj93/udacity-devops-capstone
+CICRECI = https://app.circleci.com/pipelines/github/rj93/udacity-devops-capstone?filter=all
+SITE = http://a2f2e703302a749a8be3e38cd88a5ea5-1009033152.us-east-1.elb.amazonaws.com/
