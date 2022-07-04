@@ -65,9 +65,11 @@ jobs:
               echo "Updating deployment to ${CIRCLE_WORKFLOW_ID:0:7}"
               kubectl set image deployment/site-deployment site="$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
               # kubectl set image deployment/site-deployment site="$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:latest"
+              exit 0
             else
               echo "Creating deployment"
               kubectl apply -f ./kubernetes
+              exit 0
             fi
 
 workflows:
