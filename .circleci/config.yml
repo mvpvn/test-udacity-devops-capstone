@@ -69,7 +69,7 @@ jobs:
             else
               echo "Creating deployment"
               kubectl apply -f ./kubernetes
-            end
+            fi
 
 workflows:
   default:
