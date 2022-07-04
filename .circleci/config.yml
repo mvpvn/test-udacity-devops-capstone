@@ -70,13 +70,13 @@ jobs:
 workflows:
   default:
     jobs:
-#      - lint
-#      - build:
-#          requires:
-#            - lint
-#      - publish:
-#          requires:
-#            - build
-      - deploy
-#          requires:
-#            - publish
+      - lint
+      - build:
+          requires:
+            - lint
+      - publish:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - publish
