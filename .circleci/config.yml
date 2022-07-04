@@ -48,6 +48,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
+      - checkout
       - run:
           name: Install dependencies
           command: |
@@ -66,8 +67,6 @@ jobs:
               # kubectl set image deployment/site-deployment site="$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:latest"
             else
               echo "Creating deployment"
-              pwd 
-              ls -la
               kubectl apply -f ./kubernetes
             fi
 
