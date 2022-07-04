@@ -60,8 +60,8 @@ jobs:
             cat ~/.kube/config
             echo $(aws sts get-caller-identity)
             echo "Deploying to cluster"
-            RESULT=$(kubectl get deployment site)
-            echo $RESULT
+#            RESULT=$(kubectl get deployment site)
+#            echo "RESULT=$RESULT"
             if $(kubectl get deployment site); then
               echo "Updating deployment to ${CIRCLE_WORKFLOW_ID:0:7}"
               # kubectl set image deployment/site-deployment site=$DOCKERHUB_LOGIN/$CIRCLE_PROJECT_REPONAME:${CIRCLE_WORKFLOW_ID:0:7}"
