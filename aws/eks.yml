@@ -87,10 +87,11 @@ Resources:
       ScalingConfig:
         MinSize: 1
         DesiredSize: 1
-        MaxSize: 1
+        MaxSize: 3
       Subnets:
         - Fn::ImportValue: !Sub "${EnvironmentName}-PRI1-SN"
         - Fn::ImportValue: !Sub "${EnvironmentName}-PRI2-SN"
+    DependsOn: EKSCluster
 #  LBSecGroup:
 #    Type: AWS::EC2::SecurityGroup
 #    Properties:

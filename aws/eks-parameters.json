@@ -5,6 +5,6 @@
 	},
 	{
 		"ParameterKey": "InstanceType",
-		"ParameterValue": "t3.nano"
+		"ParameterValue": "t3.medium"
 	}
 ]
