@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: site
-          image: rj93/udacity-devops-capstone:latest
+          image: tanquyvt/test-udacity-devops-capstone:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
