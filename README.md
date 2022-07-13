@@ -12,10 +12,11 @@ Run the following to configure the AWS account:
 ```
 
 ## Configure Circle CI environment variables
-These variables can be retrieved from Udacity 
+These variables can be retrieved from Udacity, Dockerhub
 ```
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
+AWS_DEFAULT_REGION
 DOCKERHUB_LOGIN
 DOCKERHUB_PASSWORD
 ```
