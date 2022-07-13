@@ -12,11 +12,12 @@ Run the following to configure the AWS account:
 ```
 
 ## Configure Circle CI environment variables
-These variables can be retieved from Udacity 
+These variables can be retrieved from Udacity 
 ```
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
-AWS_SESSION_TOKEN
+DOCKERHUB_LOGIN
+DOCKERHUB_PASSWORD
 ```
 
 ## Clean up
